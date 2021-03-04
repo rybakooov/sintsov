@@ -30,6 +30,6 @@
 
 <style lang="scss" module>
   .main {
-
+    color: red;
   }
 </style>
