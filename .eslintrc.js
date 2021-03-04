@@ -11,7 +11,24 @@ module.exports = {
     '@nuxtjs',
     'plugin:nuxt/recommended'
   ],
+  plugins: [],
   // add your custom rules here
   rules: {
+    'vue/singleline-html-element-content-newline': 'off',
+    'vue/order-in-components': 'off',
+    'vue/max-attributes-per-line': 'off',
+    // 'vue/no-unused-vars': 'off',
+    'vue/html-closing-bracket-spacing': 'off',
+    'vue/html-self-closing': 'off',
+    'vue/no-v-html': 'off',
+    'vue/attributes-order': 'off',
+    'space-before-function-paren': 'off',
+    'no-lonely-if': 'off',
+    'no-trailing-spaces': 'off',
+    'indent': 'off',
+    'no-unused-vars': 'off',
+    'import/order': 'off',
+    'no-unreachable': 'off',
+    'template-curly-spacing': 'off'
   }
 }
