@@ -8,7 +8,6 @@
         </span>
       </span>
     </h1>
-
     <figure :class="$style.figure">
       <blockquote :class="$style.blockquote">
         <p :class="$style.text">
