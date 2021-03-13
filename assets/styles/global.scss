@@ -2,6 +2,18 @@
 @import './reset';
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500&display=swap');
 
+@font-face {
+  font-family: 'Todes Normal';
+  src:  url('./../fonts/Todes-Normal.woff2') format('woff2'),
+        url('./../fonts/Todes-Normal.woff') format('woff'),
+        url('./../fonts/Todes-Normal.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+
 html, body {
   font-family: 'Manrope', sans-serif;
   font-size: var(--root-font-size);

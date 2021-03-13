@@ -43,11 +43,13 @@ export default {
   ** Global CSS
   */
   css: [
-    '@/assets/styles/global.scss'
+    'assets/styles/global.scss'
   ],
 
   styleResources: {
-    scss: ['assets/styles/prepend.scss']
+    scss: [
+      '@/assets/styles/prepend.scss'
+    ]
   },
   /*
   ** Plugins to load before mounting the App
@@ -71,6 +73,8 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
+    '@nuxtjs/style-resources',
+    '@nuxtjs/axios',
     'nuxt-i18n'
   ],
   /*

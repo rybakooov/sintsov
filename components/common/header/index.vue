@@ -71,6 +71,7 @@
   .langLink {
     display: block;
     text-transform: capitalize;
+    color: var(--root-light-black);
     .text {
       font-size: 1.4em;
       line-height: 1.35;
@@ -79,8 +80,8 @@
       margin-left: 2.4em;
     }
     &[disabled] {
+      color: var(--root-black);
       pointer-events: none;
-      color: var(--root-light-black);
     }
   }
 
