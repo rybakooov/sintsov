@@ -1,11 +1,12 @@
+const path = require('path')
 const isDev = process.env.NODE_ENV === 'development'
+const isStage = process.env.NODE_ENV === 'staging'
+const envFilename = isStage ? '.env.stage' : isDev ? '.env.dev' : '.env.prod'
+require('dotenv').config({ path: envFilename })
 
 export default {
   ssr: true,
   globalName: 'app',
-  publicRuntimeConfig: {
-    baseURL: process.env.BASE_URL || 'https://nuxtjs.org'
-  },
   /*
   ** Headers of the page
   */
@@ -44,10 +45,20 @@ export default {
   css: [
     '@/assets/styles/global.scss'
   ],
+
+  styleResources: {
+    scss: ['assets/styles/prepend.scss']
+  },
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
+    { src: '~/plugins/i18n.js' },
+    { src: '~/plugins/router.js' }
+  ],
+
+  serverMiddleware: [
+    '~/middleware/server-trailing-slash.js'
   ],
   /*
   ** Nuxt.js dev-modules
@@ -81,5 +92,6 @@ export default {
       }
     }
   },
-  i18n: require('./configs/i18n.js').default
+  i18n: require('./configs/i18n.js').default,
+  router: require('./configs/router.js').default
 }

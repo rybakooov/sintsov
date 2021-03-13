@@ -1,5 +1,7 @@
 <template>
-  <div>Intro</div>
+  <section :class="$style.container">
+
+  </section>
 </template>
 
 <script>
@@ -9,5 +11,7 @@
 </script>
 
 <style lang="scss" module>
-
+  .container {
+    @include grid;
+  }
 </style>

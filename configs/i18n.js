@@ -5,7 +5,7 @@ export default {
     {
       code: 'ru',
       name: 'Русский',
-      key: 'ru',
+      key: 'ru'
     },
     {
       code: 'en',
@@ -22,7 +22,7 @@ export default {
   vueI18n: {
     fallbackLocale: 'en',
     silentTranslationWarn: true,
-    messages:{
+    messages: {
       en: require('../assets/translates/en').default,
       ru: require('../assets/translates/ru').default
     }
