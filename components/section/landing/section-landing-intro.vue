@@ -1,23 +1,14 @@
 <template>
   <section :class="$style.container">
     <h1 :class="$style.title">
-      <span :class="$style.text">
-        composer <br>for
-        <span :class="$style.gold">
-          Film & TV
-        </span>
-      </span>
+      <span :class="$style.text" v-html="introData['title_' + this.$root.$i18n.locale]" />
     </h1>
     <figure :class="$style.figure">
       <blockquote :class="$style.blockquote">
-        <p :class="$style.text">
-          The soundtrack is another pleasure, with Ivan Sintsov and Alim Zairov’s score occasionally taking brief, unexpectedly hip detours into ’80s-style synthpop.
-        </p>
+        <p :class="$style.text" v-html="introData['quote_' + this.$root.$i18n.locale]" />
       </blockquote>
       <figcaption :class="$style.author">
-        <span :class="$style.text">
-          "Yellow Cat" Review, Variety
-        </span>
+        <span :class="$style.text" v-html="introData['author_' + this.$root.$i18n.locale]" />
       </figcaption>
     </figure>
   </section>
@@ -25,7 +16,13 @@
 
 <script>
   export default {
-    name: 'SectionLandingIntro'
+    name: 'SectionLandingIntro',
+    props: {
+      introData: {
+        type: Object,
+        required: true
+      }
+    }
   }
 </script>
 
@@ -48,9 +45,9 @@
     .text {
       font-size: 9.8em;
       line-height: 1.1;
-    }
-    .gold {
-      color: var(--root-gold);
+      span {
+        color: var(--root-gold);
+      }
     }
   }
 

@@ -1,6 +1,6 @@
 <template>
   <section :class="$style.container">
-    <h2 :class="$style.title">
+    <h2 :class="$style.blockTitle">
       <span :class="$style.text">Explore <br>filmography</span>
     </h2>
     <div :class="$style.filter">
@@ -10,14 +10,12 @@
     </div>
     <div :class="$style.desc">
       <p :class="$style.title">
-        <span :class="$style.text">New works are planned to be released in March</span>
+        <span :class="$style.text">New works are planned <br>to be released in March</span>
       </p>
-      <div class="links">
-        <ui-route :class="$style.link" v-for="(item, i) in [1, 2]" :key="i">
-          <span :class="$style.text">Kinopoisk</span>
-          <icon-arrow-right :class="$style.arrow" />
-        </ui-route>
-      </div>
+      <ui-route :class="$style.link" v-for="(item, i) in [1, 2]" :key="i">
+        <span :class="$style.text">Kinopoisk</span>
+        <icon-arrow-right :class="$style.arrow" />
+      </ui-route>
     </div>
     <div :class="$style.slider">
       <div :class="$style.sliderTrack">
@@ -73,7 +71,7 @@
     row-gap: 8em;
   }
 
-  .title {
+  .blockTitle {
     grid-column: 1 / 2;
     font-weight: 500;
     text-transform: uppercase;
@@ -89,6 +87,26 @@
 
   .desc {
     grid-column: 1 / 2;
+    .title {
+      margin-bottom: 4em;
+      .text {
+        font-size: 1.8em;
+        line-height: 1.5;
+      }
+    }
+    .link {
+      display: flex;
+      align-items: center;
+      .text {
+        font-size: 14px;
+        line-height: 150%;
+        color: var(--root-gold);
+        margin-right: 0.8em;
+      }
+      & + .link {
+        margin-top: 0.8em;
+      }
+    }
   }
 
   .slider {
