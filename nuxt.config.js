@@ -67,13 +67,13 @@ export default {
   */
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
+    '@nuxtjs/style-resources',
     '@nuxtjs/eslint-module'
   ],
   /*
   ** Nuxt.js modules
   */
   modules: [
-    '@nuxtjs/style-resources',
     '@nuxtjs/axios',
     'nuxt-i18n'
   ],
