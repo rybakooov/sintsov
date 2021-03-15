@@ -6,12 +6,13 @@ left: 0;
 font-size: 24px">
       {{ isFixed }}
       {{ sliderOffset }}
+      {{ marginLeft }}
     </pre>
     <div :class="containerClasses" ref="container">
       <h2 :class="$style.blockTitle">
         <span :class="$style.text">Explore <br>filmography</span>
       </h2>
-      <div :class="$style.filter">
+      <div :class="$style.filter" ref="filter">
         <button :class="$style.item" v-for="(item, i) in [1, 2, 3, 4]" :key="i">
           <span :class="$style.text">2019</span>
         </button>
@@ -63,7 +64,9 @@ font-size: 24px">
         films: [1, 2, 3, 4, 5],
         visibleFilms: 3,
         sliderOffset: 0,
-        marginLeft: 24,
+        marginLeft: 0,
+        filmWidth: 0,
+        filterWidth: 0,
         scrollHeight: 0,
         windowHeight: 0,
         scrollBlockPos: 0,
@@ -80,8 +83,12 @@ font-size: 24px">
     mounted() {
       this.onResize()
       this.onScroll()
-      document.addEventListener('scroll', this.onScroll)
-      this.raf = window.requestAnimationFrame(this.setTranform)
+      this.$nextTick(() => {
+        this.onResize()
+        this.onScroll()
+        document.addEventListener('scroll', this.onScroll)
+        this.raf = window.requestAnimationFrame(this.setTranform)
+      })
     },
     computed: {
       containerClasses () {
@@ -100,7 +107,7 @@ font-size: 24px">
     },
     methods: {
       setSliderOffset() {
-        this.sliderOffset = (this.$refs.film[this.$refs.film.length - 1].offsetWidth + this.marginLeft) * (this.films.length - this.visibleFilms) - this.marginLeft
+        this.sliderOffset = ((this.filmWidth + this.marginLeft) * this.$refs.film.length) - this.marginLeft - this.filterWidth
       },
       setScrollHeight() {
         this.scrollHeight = this.$refs.container.clientHeight + this.sliderOffset
@@ -112,6 +119,9 @@ font-size: 24px">
           this.windowHeight = window.innerHeight
           this.containerHeight = this.$refs.container.clientHeight
           this.scrollBlockPos = this.$refs.scroll.getBoundingClientRect()
+          this.marginLeft = parseFloat(window.getComputedStyle(this.$refs.film[1]).marginLeft)
+          this.filmWidth = parseFloat(window.getComputedStyle(this.$refs.film[0]).width)
+          this.filterWidth = parseFloat(window.getComputedStyle(this.$refs.filter).width)
         } catch (e) {}
       },
       onScroll() {
@@ -240,8 +250,8 @@ font-size: 24px">
 
   .sliderTrack {
     display: flex;
-    width: 100%;
-    grid-row: 1 / 2;
+    // width: 100%;
+    // grid-row: 1 / 2;
   }
 
   .film {
@@ -279,6 +289,7 @@ font-size: 24px">
     margin-top: .8em;
     color: var(--root-light-black);
     .text {
+      display: block;
       font-size: 1.4em;
       line-height: 1.5;
     }
