@@ -13,8 +13,8 @@ font-size: 24px">
         <span :class="$style.text">Explore <br>filmography</span>
       </h2>
       <div :class="$style.filter" ref="filter">
-        <button :class="$style.item" v-for="(item, i) in [1, 2, 3, 4]" :key="i">
-          <span :class="$style.text">2019</span>
+        <button :class="[$style.item, {[$style.active]: (item === currentYear)}]" v-for="(item, i) in years" :key="i">
+          <span :class="$style.text">{{ item }}</span>
         </button>
       </div>
       <div :class="$style.desc">
@@ -62,6 +62,8 @@ font-size: 24px">
     data() {
       return {
         films: [1, 2, 3, 4, 5],
+        years: [2020, 2019, 2018, 2017],
+        currentYear: 2020,
         visibleFilms: 3,
         sliderOffset: 0,
         marginLeft: 0,
@@ -198,6 +200,23 @@ font-size: 24px">
     grid-column: 2 / 5;
   }
 
+  .item {
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+    border: none;
+    & + & {
+      margin-left: 2.4em;
+    }
+    &.active {
+      color: var(--root-gold);
+    }
+    .text {
+      font-size: 1.2em;
+      line-height: 1.2;
+    }
+  }
+
   .desc {
     grid-column: 1 / 2;
     position: relative;
@@ -239,6 +258,10 @@ font-size: 24px">
       & + .link {
         margin-top: 0.8em;
       }
+    }
+    .arrow {
+      width: 4em;
+      height: auto;
     }
   }
 
