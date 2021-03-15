@@ -1,5 +1,5 @@
 <template>
-  <div>Bio</div>
+  <div :class="$style.bio">Bio</div>
 </template>
 
 <script>
@@ -9,5 +9,7 @@
 </script>
 
 <style lang="scss" module>
-
+  .bio {
+    height: 100vh;
+  }
 </style>

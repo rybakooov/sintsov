@@ -56,7 +56,8 @@ export default {
   */
   plugins: [
     { src: '~/plugins/i18n.js' },
-    { src: '~/plugins/router.js' }
+    { src: '~/plugins/router.js' },
+    { src: '~/plugins/resize.js' }
   ],
 
   serverMiddleware: [
