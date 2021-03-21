@@ -1,0 +1,86 @@
+.cursor {
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+  z-index: 100;
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  &__view {
+    width: 4.8em;
+    height: 4.8em;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 1px solid #d4d4d4;
+    transition: all .3s ease;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--root-gold);
+    &:after {
+      content: '';
+      width: 4px;
+      height: 4px;
+      background-color: var(--root-gold);
+      display: block;
+      border-radius: 50%;
+      transition: .2s;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  &__text {
+    font-size: 1.4em;
+    font-weight: normal;
+  }
+
+  &__icon {
+    transform: scale(0);
+    transition: .3s;
+    svg {
+      display: block;
+      transition: transform 0.25s ease;
+    }
+  }
+
+  &--hover &__icon{
+    transform: scale(1);
+  }
+
+  &--hover[data-size="md"]:not(&--hidden) &__view {
+    width: 8em;
+    height: 8em;
+  }
+  &--hover[data-size="sm"]:not(&--hidden) &__view {
+    width: 8em;
+    height: 8em;
+  }
+  &--hover[data-size="xs"]:not(&--hidden) &__view {
+    width: 5em;
+    height: 5em;
+  }
+  &--hover &__view:after {
+    opacity: 0;
+  }
+  &--hover &__view {
+    border-color: var(--root-gold);
+    background-color: rgba(255, 255, 255, 0.4);
+  }
+  &--hidden &__view {
+    transform: translate(-50%, -50%) scale(0);
+  }
+  &--click:not(&--hidden) &__view {
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+}
+
+.cursor-area * {
+  cursor: none !important;
+}

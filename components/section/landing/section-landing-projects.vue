@@ -1,19 +1,11 @@
 <template>
   <section :class="[$style.scroll, {[$style.scroll_bottom]: isBottom}]" ref="scroll" :style="scrollStyle">
-    <pre style="position: fixed;
-top: 0;
-left: 0;
-font-size: 24px">
-      {{ isFixed }}
-      {{ sliderOffset }}
-      {{ marginLeft }}
-    </pre>
     <div :class="containerClasses" ref="container">
       <h2 :class="$style.blockTitle">
         <span :class="$style.text">Explore <br>filmography</span>
       </h2>
       <div :class="$style.filter" ref="filter">
-        <button :class="[$style.item, {[$style.active]: (item === currentYear)}]" v-for="(item, i) in years" :key="i">
+        <button :class="[$style.item, {[$style.active]: (item === currentYear)}]" v-for="(item, i) in years" :key="i" v-cursor="{ text: item }">
           <span :class="$style.text">{{ item }}</span>
         </button>
       </div>
@@ -29,9 +21,9 @@ font-size: 24px">
       <div :class="$style.slider">
         <div :class="$style.sliderTrack" :style="styleSlider">
           <article :class="$style.film" v-for="(item, i) in films" :key="i" ref="film">
-            <div :class="$style.imgbox">
+            <ui-route :to="'film/' + item" :class="$style.imgbox" v-cursor="{ icon: 'eye' }">
               <img src="http://placehold.it/1120x300" alt="">
-            </div>
+            </ui-route>
             <div :class="$style.filmDesc">
               <p :class="$style.filmName">
                 <span :class="$style.text">Yellow Cat</span>
@@ -205,11 +197,15 @@ font-size: 24px">
     margin: 0;
     background-color: transparent;
     border: none;
+    transition: opacity .3s;
     & + & {
       margin-left: 2.4em;
     }
     &.active {
       color: var(--root-gold);
+    }
+    &:hover:not(.active) {
+      opacity: 0;
     }
     .text {
       font-size: 1.2em;
@@ -222,22 +218,18 @@ font-size: 24px">
     position: relative;
     z-index: 2;
     background-color: #fff;
-    &:after, &:before {
+    &:before {
       content: '';
       background-color: #fff;
       height: 100%;
       display: block;
       position: absolute;
       top: 0;
-      z-index: 2;
-    }
-    &:after {
-      left: 100%;
-      width: 2.4em;
-    }
-    &:before {
-      right: 100%;
-      width: var(--root-layout-offset);
+      z-index: -1;
+      right: -2.4em;
+      width: calc(2.4em + 100% + var(--root-layout-offset));
+      height: calc(100% + 2em);
+      top: -1em;
     }
     .title {
       margin-bottom: 4em;
@@ -249,11 +241,10 @@ font-size: 24px">
     .link {
       display: flex;
       align-items: center;
+      color: var(--root-gold);
       .text {
-        font-size: 14px;
-        line-height: 150%;
-        color: var(--root-gold);
-        margin-right: 0.8em;
+        font-size: 1.4em;
+        line-height: 1.5;
       }
       & + .link {
         margin-top: 0.8em;
@@ -262,6 +253,7 @@ font-size: 24px">
     .arrow {
       width: 4em;
       height: auto;
+      margin-left: 0.8em;
     }
   }
 
@@ -280,6 +272,7 @@ font-size: 24px">
   .film {
     width: 100%;
     flex-shrink: 0;
+    display: block;
     & + & {
       margin-left: 2.4em;
     }
@@ -288,6 +281,7 @@ font-size: 24px">
   .imgbox {
     padding-bottom: 140%;
     position: relative;
+    display: block;
     img {
       position: absolute;
       width: 100%;

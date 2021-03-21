@@ -1,14 +1,14 @@
 <template>
   <section :class="$style.container">
     <h1 :class="$style.title">
-      <span :class="$style.text" v-html="introData['title_' + this.$root.$i18n.locale]" />
+      <span :class="$style.text" v-html="pageData['title_' + this.$root.$i18n.locale]" />
     </h1>
     <figure :class="$style.figure">
       <blockquote :class="$style.blockquote">
-        <p :class="$style.text" v-html="introData['quote_' + this.$root.$i18n.locale]" />
+        <p :class="$style.text" v-html="pageData['quote_' + this.$root.$i18n.locale]" />
       </blockquote>
       <figcaption :class="$style.author">
-        <span :class="$style.text" v-html="introData['author_' + this.$root.$i18n.locale]" />
+        <span :class="$style.text" v-html="pageData['author_' + this.$root.$i18n.locale]" />
       </figcaption>
     </figure>
   </section>
@@ -18,7 +18,7 @@
   export default {
     name: 'SectionLandingIntro',
     props: {
-      introData: {
+      pageData: {
         type: Object,
         required: true
       }
@@ -40,7 +40,7 @@
     text-align: center;
     text-transform: uppercase;
     display: block;
-    margin: 13.6em  auto 8em;
+    margin: 14em auto 8em;
     grid-column: 1 / 5;
     .text {
       font-size: 9.8em;

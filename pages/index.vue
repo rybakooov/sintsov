@@ -1,13 +1,10 @@
 <template>
-  <main v-if="loaded">
-    <section-landing-intro :introData="info"/>
+  <main>
+    <section-landing-intro :page-data="pageData"/>
     <section-landing-projects />
     <section-landing-bio />
     <section-landing-contacts />
   </main>
-  <div v-else>
-    LOADING
-  </div>
 </template>
 
 <script>
@@ -25,19 +22,11 @@
     },
     data() {
       return {
-        info: {},
-        loaded: false
+        pageData: {}
       }
     },
-    methods: {
-      async fetchSomething() {
-        const data = await this.$axios.$get('https://sintsov-api.herokuapp.com/index')
-        this.info = data
-        this.loaded = true
-      }
-    },
-    mounted() {
-      this.fetchSomething()
+    async fetch() {
+      this.pageData = await this.$axios.$get('https://sintsov-api.herokuapp.com/index')
     }
   }
 </script>

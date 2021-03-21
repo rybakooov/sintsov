@@ -57,7 +57,9 @@ export default {
   plugins: [
     { src: '~/plugins/i18n.js' },
     { src: '~/plugins/router.js' },
-    { src: '~/plugins/resize.js' }
+    { src: '~/plugins/resize.js' },
+    { src: '~/plugins/directives.js', mode: 'client' },
+    { src: '~/plugins/animatePages.js', mode: 'client' }
   ],
 
   serverMiddleware: [

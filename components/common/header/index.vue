@@ -1,13 +1,13 @@
 <template>
   <header :class="$style.container">
     <div :class="$style.lang">
-      <a v-for="(locale, i) in locales" :key="i" :disabled="isDisabled(locale.code)" :href="changeLocaleHref(locale.code)" :class="$style.langLink">
+      <a v-for="(locale, i) in locales" v-cursor="{ icon: 'arrow', size: 1 }" :key="i" :disabled="isDisabled(locale.code)" :href="changeLocaleHref(locale.code)" :class="$style.langLink">
         <span :class="$style.text">{{ locale.code }}</span>
       </a>
     </div>
-    <ui-route to="/" :class="$style.logo">Ivan<br />Sintsov</ui-route>
+    <ui-route to="/" :class="$style.logo" v-cursor="{ icon: 'arrow', size: 1 }">Ivan<br />Sintsov</ui-route>
     <nav :class="$style.nav">
-      <ui-route v-for="link in links" :key="link.title" :class="$style.navLink" :to="'/' + link.hash">
+      <ui-route v-for="link in links" :key="link.title" :class="$style.navLink" :to="'/' + link.hash" v-cursor="{ text: link.title }">
         <span :class="$style.text">{{ link.title }}</span>
       </ui-route>
     </nav>
@@ -58,7 +58,7 @@
 
 <style lang="scss" module>
   .container {
-    padding: 2.4em 22em;
+    padding: 2.4em 22em 2em;
     display: flex;
     align-items: center;
   }
@@ -103,12 +103,18 @@
 
   .navLink {
     color: var(--root-light-black);
+    transition: opacity .3s;
     .text {
       font-size: 1.4em;
       line-height: 1.35;
     }
     & + & {
       margin-left: 2.4em;
+    }
+    &:hover {
+      @media screen and (min-width: 1024px) {
+        opacity: 0;
+      }
     }
   }
 </style>
