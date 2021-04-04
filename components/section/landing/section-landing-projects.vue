@@ -80,7 +80,7 @@
       this.$nextTick(() => {
         this.onResize()
         this.onScroll()
-        document.addEventListener('scroll', this.onScroll)
+        document.querySelector('.os-viewport').addEventListener('scroll', this.onScroll)
         this.raf = window.requestAnimationFrame(this.setTranform)
       })
     },
@@ -119,10 +119,12 @@
         } catch (e) {}
       },
       onScroll() {
+        console.log('scroll')
         try {
           this.scrollBlockPos = this.$refs.scroll.getBoundingClientRect()
-          this.deltaY = -(window.pageYOffset - this.cachedY)
-          this.cachedY = window.pageYOffset
+          this.deltaY = -(document.querySelector('.os-viewport').scrollTop - this.cachedY)
+
+          this.cachedY = document.querySelector('.os-viewport').scrollTop
           this.checkContainerStatus()
         } catch (e) {}
       },
@@ -158,6 +160,7 @@
 <style lang="scss" module>
   .scroll {
     margin: 16em 0;
+    pointer-events: none;
     &_bottom {
       display: flex;
       align-items: flex-end;
@@ -198,6 +201,7 @@
     background-color: transparent;
     border: none;
     transition: opacity .3s;
+    pointer-events: all;
     & + & {
       margin-left: 2.4em;
     }
@@ -242,6 +246,7 @@
       display: flex;
       align-items: center;
       color: var(--root-gold);
+      pointer-events: all;
       .text {
         font-size: 1.4em;
         line-height: 1.5;
@@ -273,6 +278,7 @@
     width: 100%;
     flex-shrink: 0;
     display: block;
+    pointer-events: all;
     & + & {
       margin-left: 2.4em;
     }

@@ -13,9 +13,11 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.12.3",
+    "animated-scroll-to": "^2.2.0",
     "gsap": "^3.6.0",
     "nuxt": "^2.0.0",
     "nuxt-i18n": "^6.20.4",
+    "overlayscrollbars": "^1.13.1",
     "vue-resize": "^0.5.0"
   },
   "devDependencies": {

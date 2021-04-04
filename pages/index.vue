@@ -12,8 +12,10 @@
   import SectionLandingProjects from '@/components/section/landing/section-landing-projects'
   import SectionLandingBio from '@/components/section/landing/section-landing-bio'
   import SectionLandingContacts from '@/components/section/landing/section-landing-contacts'
+  import pageTransition from '@/mixins/pageTransition'
 
   export default {
+    mixins: [pageTransition()],
     components: {
       SectionLandingIntro,
       SectionLandingProjects,

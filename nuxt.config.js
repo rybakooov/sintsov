@@ -43,6 +43,7 @@ export default {
   ** Global CSS
   */
   css: [
+    'overlayscrollbars/css/OverlayScrollbars.css',
     'assets/styles/global.scss'
   ],
 
@@ -59,7 +60,8 @@ export default {
     { src: '~/plugins/router.js' },
     { src: '~/plugins/resize.js' },
     { src: '~/plugins/directives.js', mode: 'client' },
-    { src: '~/plugins/animatePages.js', mode: 'client' }
+    { src: '~/plugins/animatePages.js', mode: 'client' },
+    { src: '~/plugins/scrollbar.js', mode: 'client' }
   ],
 
   serverMiddleware: [
