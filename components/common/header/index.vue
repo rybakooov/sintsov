@@ -7,7 +7,7 @@
     </div>
     <ui-route to="/" :class="$style.logo" v-cursor="{ icon: 'arrow', size: 1 }">Ivan<br />Sintsov</ui-route>
     <nav :class="$style.nav">
-      <ui-route v-for="link in links" :key="link.title" :class="$style.navLink" :to="'/' + link.hash" v-cursor="{ text: link.title }">
+      <ui-route v-for="link in links" :key="link.title" :class="$style.navLink" :to="'/' + link.hash" v-cursor="{ text: link.title }" @click.native="scrollToAnchors(link.hash)">
         <span :class="$style.text">{{ link.title }}</span>
       </ui-route>
     </nav>
@@ -16,6 +16,7 @@
 
 <script>
   import UiRoute from '@/components/ui/route'
+  import scrollTo from '@/utils/scrollTo'
 
   export default {
     name: 'Header',
@@ -51,6 +52,21 @@
       },
       isDisabled(code) {
         return code === this.$root.$i18n.locale
+      },
+      scrollToAnchors(id) {
+        const el = document.querySelector(id)
+        if (el) {
+          scrollTo(el, {
+            elementToScroll: document.querySelector('.os-viewport'),
+            speed: 2000,
+            verticalOffset: -160,
+            easing: (t) => {
+              return 1 + (--t) * t * t * t * t
+            }
+          }).then(() => {
+            // next()
+          })
+        }
       }
     }
   }

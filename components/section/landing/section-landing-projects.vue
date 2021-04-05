@@ -1,5 +1,5 @@
 <template>
-  <section :class="[$style.scroll, {[$style.scroll_bottom]: isBottom}]" ref="scroll" :style="scrollStyle">
+  <section :class="[$style.scroll, {[$style.scroll_bottom]: isBottom}]" ref="scroll" :style="scrollStyle" id="projects">
     <div :class="containerClasses" ref="container">
       <h2 :class="$style.blockTitle">
         <span :class="$style.text">Explore <br>filmography</span>
@@ -21,16 +21,16 @@
       <div :class="$style.slider">
         <div :class="$style.sliderTrack" :style="styleSlider">
           <article :class="$style.film" v-for="(item, i) in films" :key="i" ref="film">
-            <ui-route :to="'film/' + item" :class="$style.imgbox" v-cursor="{ icon: 'eye' }">
-              <img src="http://placehold.it/1120x300" alt="">
+            <ui-route :to="'film/' + item.id" :class="$style.imgbox" v-cursor="{ icon: 'eye' }">
+              <img :src="'https://sintsov-api.herokuapp.com' + item.poster.url" alt="">
             </ui-route>
             <div :class="$style.filmDesc">
               <p :class="$style.filmName">
-                <span :class="$style.text">Yellow Cat</span>
+                <span :class="$style.text">{{ item['title_' + $root.$i18n.locale] }}</span>
               </p>
               <p :class="$style.filmData">
-                <span :class="$style.text">Kazakhstan-France, 2020</span>
-                <span :class="$style.text">Drama, Criminal</span>
+                <span :class="$style.text">{{ item['where_' + $root.$i18n.locale] }}, {{ item.year }}</span>
+                <span :class="$style.text">{{ item['genre_' + $root.$i18n.locale] }}</span>
               </p>
             </div>
           </article>
@@ -51,10 +51,14 @@
       UiRoute,
       IconArrowRight
     },
+    props: {
+      films: {
+        type: Array,
+        default: () => []
+      }
+    },
     data() {
       return {
-        films: [1, 2, 3, 4, 5],
-        years: [2020, 2019, 2018, 2017],
         currentYear: 2020,
         visibleFilms: 3,
         sliderOffset: 0,
@@ -97,6 +101,13 @@
         return {
           transform: `translateX(${this.destinationX}px)`
         }
+      },
+      years () {
+        // const years = this.films[0].films.forEach((item, index) => {
+        //   return item
+        // })
+        // console.log(this.films[0].films)
+        return 0
       }
     },
     methods: {

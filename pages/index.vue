@@ -1,8 +1,8 @@
 <template>
   <main>
     <section-landing-intro :page-data="pageData"/>
-    <section-landing-projects />
-    <section-landing-bio />
+    <section-landing-projects :films="films" />
+    <section-landing-bio :page-data="pageData"/>
     <section-landing-contacts />
   </main>
 </template>
@@ -24,11 +24,13 @@
     },
     data() {
       return {
-        pageData: {}
+        pageData: {},
+        films: []
       }
     },
     async fetch() {
       this.pageData = await this.$axios.$get('https://sintsov-api.herokuapp.com/index')
+      this.films = await this.$axios.$get('https://sintsov-api.herokuapp.com/films')
     }
   }
 </script>

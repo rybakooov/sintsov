@@ -2,20 +2,20 @@
   <section :class="$style.container">
     <aside :class="$style.aside">
       <p :class="$style.text">
-        Japan, 2019<br>
-        Melodrama, Drama, History
+        {{ pageData['where_' + $root.$i18n.locale] }}, {{ pageData.year }}<br>
+        {{ pageData['genre_' + $root.$i18n.locale] }}
       </p>
     </aside>
     <article :class="$style.content">
-      <h1 :class="$style.title"><span :class="$style.text">Sorokin no Mita Sakura</span></h1>
+      <h1 :class="$style.title"><span :class="$style.text">{{ pageData['title_' + $root.$i18n.locale] }}</span></h1>
       <div :class="$style.desc">
         <p :class="$style.text">
-          Sakurako works as an assistant at a television studio in Matsuyama, her first independent task is to shoot a story about the local cemetery of Russian prisoners of war and their life during the Russo-Japanese War. But to study additional materials, you will have to go to Russia. The girl is not particularly enthusiastic about the project; maybe she would have refused - if not for the grandmother who handed Sakurako the diary of her great-great-grandmother Yui. Yui was a nurse in a POW camp; She entrusted her diary with the story of her love for the Russian officer Alexander Sorokin.
+          {{ pageData['description_' + $root.$i18n.locale] }}
         </p>
       </div>
       <div :class="$style.awwards">
         <p :class="$style.text">
-          Participant of the program "Russian Trace" of the 41st Moscow International Film Festival.
+          {{ pageData['award_' + $root.$i18n.locale] }}
         </p>
       </div>
     </article>
@@ -24,7 +24,13 @@
 
 <script>
   export default {
-    name: 'SectionFilmDescription'
+    name: 'SectionFilmDescription',
+    props: {
+      pageData: {
+        type: Object,
+        default: () => {}
+      }
+    }
   }
 </script>
 

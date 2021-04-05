@@ -1,7 +1,7 @@
 <template>
   <main>
-    <section-film-video />
-    <section-film-description />
+    <section-film-video :video="pageData.video" />
+    <section-film-description :page-data="pageData" />
   </main>
 </template>
 
@@ -15,6 +15,14 @@
     components: {
       SectionFilmVideo,
       SectionFilmDescription
+    },
+    data() {
+      return {
+        pageData: {}
+      }
+    },
+    async fetch() {
+      this.pageData = await this.$axios.$get('https://sintsov-api.herokuapp.com/films/2')
     }
   }
 </script>

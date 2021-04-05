@@ -1,5 +1,5 @@
 <template>
-  <section :class="$style.container">
+  <section :class="$style.container" id="contacts">
     <h3 :class="$style.title">
       <span :class="$style.text">
         contact

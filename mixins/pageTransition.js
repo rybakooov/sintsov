@@ -3,7 +3,7 @@ import { TweenMax, Power2 } from 'gsap'
 export default function () {
   return {
     transition(to, from) {
-      const direction = to.fullPath === '/' ? 1 : -1
+      const direction = to.fullPath === '/' || to.fullPath === '/en' ? 1 : -1
       return {
         name: 'parent-page',
         mode: 'in-out',

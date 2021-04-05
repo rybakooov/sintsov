@@ -1,7 +1,9 @@
 <template>
   <div id="_default">
     <Header />
-    <nuxt />
+    <keep-alive>
+      <nuxt />
+    </keep-alive>
     <resize-observer @notify="onResize" />
   </div>
 </template>
