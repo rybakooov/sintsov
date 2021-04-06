@@ -1,7 +1,7 @@
 <template>
   <section :class="$style.container">
     <video
-      src="https://cdn.videvo.net/videvo_files/video/free/2013-08/small_watermarked/hd0983_preview.webm"
+      :src="videoUrl"
       autoplay
       muted
       loop
@@ -11,7 +11,25 @@
 
 <script>
   export default {
-    name: 'SectionFilmVideo'
+    name: 'SectionFilmVideo',
+    props: {
+      id: {
+        
+      },
+      video: {
+        type: Object,
+        default: () => {}
+      }
+    },
+    computed: {
+      videoUrl () {
+        if (this.video?.url) {
+          return 'https://sintsov-api.herokuapp.com' + this.video.url
+        } else {
+          return ''
+        }
+      }
+    }
   }
 </script>
 

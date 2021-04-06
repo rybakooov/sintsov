@@ -4,7 +4,7 @@ export default {
   move: false,
   click: true,
   blend: true,
-  sticky: false,
+  // sticky: false,
   stickyDistention: 20,
   disabled: false,
   size: 'md', // [sm, md]

@@ -30,7 +30,6 @@
     },
     computed: {
       photoUrl() {
-        console.log(this.pageData.bio_photo)
         if (this.pageData?.bio_photo?.url) {
           return 'https://sintsov-api.herokuapp.com' + this.pageData.bio_photo.url
         } else {

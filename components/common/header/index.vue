@@ -63,9 +63,7 @@
             easing: (t) => {
               return 1 + (--t) * t * t * t * t
             }
-          }).then(() => {
-            // next()
-          })
+          })// .then(() => {})
         }
       }
     }

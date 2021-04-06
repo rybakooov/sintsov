@@ -22,7 +22,7 @@
       }
     },
     async fetch() {
-      this.pageData = await this.$axios.$get('https://sintsov-api.herokuapp.com/films/2')
+      this.pageData = await this.$axios.$get('https://sintsov-api.herokuapp.com/films/' + this.$route.params.id)
     }
   }
 </script>

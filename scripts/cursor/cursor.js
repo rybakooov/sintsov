@@ -27,7 +27,7 @@ export class Cursor {
     this.raf = null
     this.clickTimeout = null
     this.rafRender = this.render.bind(this)
-    this.sticky = []
+    // this.sticky = []
     this.addListeners()
     this.render()
     document.body.classList.add('cursor-area')
@@ -112,13 +112,13 @@ export class Cursor {
 
     this.cursor.$element.dataset.size = target.options.size
 
-    if (target.options.sticky) {
-      this.sticky.push({
-        target,
-        position: [0, 0],
-        destination: [0, 0]
-      })
-    }
+    // if (target.options.sticky) {
+    //   this.sticky.push({
+    //     target,
+    //     position: [0, 0],
+    //     destination: [0, 0]
+    //   })
+    // }
 
     if (!target.options.blend) {
       this.cursor.$element.classList.add(config.classNames.modifiers.blend)
@@ -144,7 +144,7 @@ export class Cursor {
   }
 
   onmousemove (e) {
-    this.updateSticky(e)
+    // this.updateSticky(e)
     this.updateIcon()
     this.updatePosition(e)
   }
@@ -183,37 +183,37 @@ export class Cursor {
     }
   }
 
-  updateSticky (e) {
-    this.sticky.forEach((item) => {
-      if (item.target === this.hover?.target) {
-        const maxX = this.hover.rect.width * item.target.options.stickyDistention / 100
-        const maxY = this.hover.rect.height * item.target.options.stickyDistention / 100
-        const centerX = this.hover.rect.left + this.hover.rect.width / 2
-        const centerY = this.hover.rect.top + this.hover.rect.height / 2
-        item.timeout = Date.now() + 2000
-        item.destination = [
-          clamp(maxX * -1, maxX, e.pageX - centerX),
-          clamp(maxY * -1, maxY, e.pageY - centerY)
-        ]
-      } else {
-        item.destination = [0, 0]
-      }
-    })
-  }
+  // updateSticky (e) {
+  //   this.sticky.forEach((item) => {
+  //     if (item.target === this.hover?.target) {
+  //       const maxX = this.hover.rect.width * item.target.options.stickyDistention / 100
+  //       const maxY = this.hover.rect.height * item.target.options.stickyDistention / 100
+  //       const centerX = this.hover.rect.left + this.hover.rect.width / 2
+  //       const centerY = this.hover.rect.top + this.hover.rect.height / 2
+  //       item.timeout = Date.now() + 2000
+  //       item.destination = [
+  //         clamp(maxX * -1, maxX, e.pageX - centerX),
+  //         clamp(maxY * -1, maxY, e.pageY - centerY)
+  //       ]
+  //     } else {
+  //       item.destination = [0, 0]
+  //     }
+  //   })
+  // }
 
   render () {
-    const removeSticky = []
+    // const removeSticky = []
     const now = Date.now()
-    this.sticky.forEach((item, index) => {
-      if (now > item.timeout && !this.hover) {
-        removeSticky.push(index)
-      } else {
-        item.position[0] += this.speed * (item.destination[0] - item.position[0])
-        item.position[1] += this.speed * (item.destination[1] - item.position[1])
-        item.target.$element.style.transform = `translate(${item.position[0]}px, ${item.position[1]}px)`
-      }
-    })
-    removeSticky.forEach(i => this.sticky.splice(i, 1))
+    // this.sticky.forEach((item, index) => {
+    //   if (now > item.timeout && !this.hover) {
+    //     removeSticky.push(index)
+    //   } else {
+    //     item.position[0] += this.speed * (item.destination[0] - item.position[0])
+    //     item.position[1] += this.speed * (item.destination[1] - item.position[1])
+    //     item.target.$element.style.transform = `translate(${item.position[0]}px, ${item.position[1]}px)`
+    //   }
+    // })
+    // removeSticky.forEach(i => this.sticky.splice(i, 1))
     this.position.x += this.speed * (this.destination.x - this.position.x)
     this.position.y += this.speed * (this.destination.y - this.position.y)
     this.cursor.$element.style.transform = `translate(${this.position.x}px, ${this.position.y}px)`

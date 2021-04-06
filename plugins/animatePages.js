@@ -18,15 +18,17 @@ export default ({ app }) => {
   })
 
    app.router.afterEach((to) => {
-     if (to.hash && document.querySelector(to.hash)) {
-       scrollTo(document.querySelector(to.hash), {
-         elementToScroll: document.querySelector('.os-viewport'),
-         speed: 2000,
-         verticalOffset: -160,
-         easing: (t) => {
-           return 1 + (--t) * t * t * t * t
-         }
-       })
+     if (to.hash !== '') {
+       setTimeout(() => {
+         scrollTo(document.querySelector(to.hash), {
+           elementToScroll: document.querySelector('.os-viewport'),
+           speed: 2000,
+           verticalOffset: -160,
+           easing: (t) => {
+             return 1 + (--t) * t * t * t * t
+           }
+         })
+       }, 2000)
      }
    })
 }

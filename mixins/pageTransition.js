@@ -3,7 +3,9 @@ import { TweenMax, Power2 } from 'gsap'
 export default function () {
   return {
     transition(to, from) {
-      const direction = to.fullPath === '/' || to.fullPath === '/en' ? 1 : -1
+      const path = to.fullPath.replaceAll(to.hash, '')
+      const direction = path === '/' || path === '/en' ? 1 : -1
+      console.log(to)
       return {
         name: 'parent-page',
         mode: 'in-out',
@@ -35,6 +37,7 @@ export default function () {
         },
         leave(el, done) {
           el.style.position = 'absolute'
+          el.style.width = '100%'
           TweenMax.to(el, 1, {
             xPercent: 50 * direction,
             scale: 0.9,

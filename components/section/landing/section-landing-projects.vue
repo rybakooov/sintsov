@@ -1,11 +1,11 @@
 <template>
-  <section :class="[$style.scroll, {[$style.scroll_bottom]: isBottom}]" ref="scroll" :style="scrollStyle" id="projects">
+  <section :class="[$style.scroll, {[$style.scroll_bottom]: isBottom}, {[$style.scroll_dontwork]: filmsLength < 4}]" ref="scroll" :style="scrollStyle" id="projects">
     <div :class="containerClasses" ref="container">
       <h2 :class="$style.blockTitle">
         <span :class="$style.text">Explore <br>filmography</span>
       </h2>
       <div :class="$style.filter" ref="filter">
-        <button :class="[$style.item, {[$style.active]: (item === currentYear)}]" v-for="(item, i) in years" :key="i" v-cursor="{ text: item }">
+        <button @click="onclick(item)" :class="[$style.item, {[$style.active]: (item === currentYear)}]" v-for="(item, i) in years" :key="i" v-cursor="{ text: item }">
           <span :class="$style.text">{{ item }}</span>
         </button>
       </div>
@@ -13,14 +13,18 @@
         <p :class="$style.title">
           <span :class="$style.text">New works are planned <br>to be released in March</span>
         </p>
-        <ui-route :class="$style.link" v-for="(item, i) in [1, 2]" :key="i">
+        <ui-route :class="$style.link" :href="general.kinopoisk" v-cursor="{ icon: 'arrow', size: 1 }">
           <span :class="$style.text">Kinopoisk</span>
+          <icon-arrow-right :class="$style.arrow" />
+        </ui-route>
+        <ui-route :class="$style.link" :href="general.imdb" v-cursor="{ icon: 'arrow', size: 1 }">
+          <span :class="$style.text">IMDb</span>
           <icon-arrow-right :class="$style.arrow" />
         </ui-route>
       </div>
       <div :class="$style.slider">
         <div :class="$style.sliderTrack" :style="styleSlider">
-          <article :class="$style.film" v-for="(item, i) in films" :key="i" ref="film">
+          <article :class="$style.film" v-for="(item, i) in filteredFilms" :key="i" ref="film">
             <ui-route :to="'film/' + item.id" :class="$style.imgbox" v-cursor="{ icon: 'eye' }">
               <img :src="'https://sintsov-api.herokuapp.com' + item.poster.url" alt="">
             </ui-route>
@@ -55,12 +59,15 @@
       films: {
         type: Array,
         default: () => []
+      },
+      general: {
+        type: Object,
+        default: () => {}
       }
     },
     data() {
       return {
         currentYear: 2020,
-        visibleFilms: 3,
         sliderOffset: 0,
         marginLeft: 0,
         filmWidth: 0,
@@ -79,11 +86,10 @@
       }
     },
     mounted() {
-      this.onResize()
-      this.onScroll()
+      this.currentYear = this.years[0] ? this.years[0] : 2020
+      this.updateScroll()
       this.$nextTick(() => {
-        this.onResize()
-        this.onScroll()
+        this.updateScroll()
         document.querySelector('.os-viewport').addEventListener('scroll', this.onScroll)
         this.raf = window.requestAnimationFrame(this.setTranform)
       })
@@ -103,11 +109,24 @@
         }
       },
       years () {
-        // const years = this.films[0].films.forEach((item, index) => {
-        //   return item
-        // })
-        // console.log(this.films[0].films)
-        return 0
+        let years = this.films.map((item) => {
+          return item.year
+        })
+        years = Array.from(new Set(years))
+        years.sort((a, b) => b - a)
+        return years
+      },
+      filteredFilms () {
+        this.$nextTick(() => {
+          this.updateScroll()
+        })
+        return this.films.filter(item => item.year === this.currentYear)
+      },
+      filmsLength() {
+        this.$nextTick(() => {
+          this.updateScroll()
+        })
+        return this.filteredFilms.length
       }
     },
     methods: {
@@ -124,13 +143,17 @@
           this.windowHeight = window.innerHeight
           this.containerHeight = this.$refs.container.clientHeight
           this.scrollBlockPos = this.$refs.scroll.getBoundingClientRect()
-          this.marginLeft = parseFloat(window.getComputedStyle(this.$refs.film[1]).marginLeft)
+          if (this.$refs.film[1]) {
+            this.marginLeft = parseFloat(window.getComputedStyle(this.$refs.film[1]).marginLeft)
+          } else {
+            this.marginLeft = 0
+          }
           this.filmWidth = parseFloat(window.getComputedStyle(this.$refs.film[0]).width)
           this.filterWidth = parseFloat(window.getComputedStyle(this.$refs.filter).width)
-        } catch (e) {}
+        } catch (e) {
+        }
       },
       onScroll() {
-        console.log('scroll')
         try {
           this.scrollBlockPos = this.$refs.scroll.getBoundingClientRect()
           this.deltaY = -(document.querySelector('.os-viewport').scrollTop - this.cachedY)
@@ -158,8 +181,18 @@
         }
       },
       setTranform() {
-        this.destinationX += 0.2 * (this.transformY - this.destinationX)
+        this.destinationX += 0.1 * (this.transformY - this.destinationX)
         window.requestAnimationFrame(this.setTranform)
+      },
+      onclick(year) {
+        if (year !== this.currentYear) {
+          this.currentYear = year
+          this.updateScroll()
+        }
+      },
+      updateScroll() {
+        this.onResize()
+        this.onScroll()
       }
     },
     beforeDestroy() {
@@ -171,10 +204,16 @@
 <style lang="scss" module>
   .scroll {
     margin: 16em 0;
-    pointer-events: none;
     &_bottom {
       display: flex;
       align-items: flex-end;
+    }
+    &_dontwork {
+      display: block !important;
+      height: auto !important;
+      .sliderTrack {
+        transform: none !important;
+      }
     }
   }
 
@@ -185,10 +224,12 @@
     overflow: hidden;
     min-height: 0;  /* NEW */
     min-width: 0;   /* NEW; needed for Firefox */
+    width: 100%;
     &_fixed {
       position: fixed;
       top: 50%;
       transform: translateY(-50%);
+      z-index: -1;
     }
   }
 
@@ -212,14 +253,13 @@
     background-color: transparent;
     border: none;
     transition: opacity .3s;
-    pointer-events: all;
     & + & {
       margin-left: 2.4em;
     }
     &.active {
       color: var(--root-gold);
     }
-    &:hover:not(.active) {
+    &:hover {
       opacity: 0;
     }
     .text {
@@ -257,7 +297,6 @@
       display: flex;
       align-items: center;
       color: var(--root-gold);
-      pointer-events: all;
       .text {
         font-size: 1.4em;
         line-height: 1.5;
@@ -289,7 +328,6 @@
     width: 100%;
     flex-shrink: 0;
     display: block;
-    pointer-events: all;
     & + & {
       margin-left: 2.4em;
     }

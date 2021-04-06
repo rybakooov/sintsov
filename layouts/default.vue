@@ -18,7 +18,8 @@
     },
     data() {
       return {
-        viewportHeight: 0
+        viewportHeight: 0,
+        general: {}
       }
     },
     computed: {

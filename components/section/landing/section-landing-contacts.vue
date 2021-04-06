@@ -6,11 +6,19 @@
       </span>
     </h3>
     <div :class="$style.links">
-      <ui-route :class="$style.email" href="info@ivansintsovmusic.com">
-        <span :class="$style.text">info@ivansintsovmusic.com</span>
+      <ui-route :class="$style.email" :href="general.email" v-cursor="{ icon: 'arrow', size: 1 }">
+        <span :class="$style.text">{{ general.email }}</span>
       </ui-route>
-      <ui-route :class="$style.link" v-for="(item, i) in [1, 2]" :key="i">
+      <ui-route :class="$style.link" :href="general.facebook" v-cursor="{ icon: 'arrow', size: 1 }">
+        <span :class="$style.text">Facebook</span>
+        <icon-arrow-right :class="$style.arrow" />
+      </ui-route>
+      <ui-route :class="$style.link" :href="general.kinopoisk" v-cursor="{ icon: 'arrow', size: 1 }">
         <span :class="$style.text">Kinopoisk</span>
+        <icon-arrow-right :class="$style.arrow" />
+      </ui-route>
+      <ui-route :class="$style.link" :href="general.imdb" v-cursor="{ icon: 'arrow', size: 1 }">
+        <span :class="$style.text">IMDb</span>
         <icon-arrow-right :class="$style.arrow" />
       </ui-route>
     </div>
@@ -26,6 +34,12 @@
     components: {
       UiRoute,
       IconArrowRight
+    },
+    props: {
+      general: {
+        type: Object,
+        default: () => {}
+      }
     }
   }
 </script>
